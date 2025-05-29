@@ -26,22 +26,29 @@ def menu():
 def opcoes():
     while (True):
         resposta = ''
-        opcao = int(input('\nDigite o código do lanche: '))
-        while opcao != int:
-            print('Opção inválida.')
-            opcao = int(input('\nDigite o código do lanche: '))
+        
+        while (True):
+            try:
+                opcao = int(input('\nDigite o código do lanche: '))
+                break  
+            except ValueError:
+                print('Opção inválida! Digite um número inteiro.')
+
 
         if opcao in cardapio:
             nome, preco = cardapio [opcao]
-            qntd = int(input(f'\nQuantos {nome} irá levar? '))
 
-            while qntd <1:
-                print('Digite um número maior ou igual a 1.')
-                qntd = int(input(f'\nQuantos {nome} irá levar? '))
-
-                while qntd != int:
-                    print('Digite um valor numérico.')
+            while True:
+                try:
                     qntd = int(input(f'\nQuantos {nome} irá levar? '))
+                    if qntd < 1:
+                        print('Digite um número maior ou igual a 1.')
+                    else:
+                        break
+                except ValueError:
+                    print('Opção inválida! Digite um número inteiro.')
+
+                        
 
 
             valor = qntd * preco
@@ -59,7 +66,7 @@ def opcoes():
             opcoes()
 
         while not ((resposta == 's') or (resposta == 'sim') or (resposta == 'n') or (resposta == 'não')):
-            resposta = input('\nDeseja algo mais? s/n')
+            resposta = input('\nDeseja algo mais? s/n\n')
 
         if resposta == 'n' or resposta == 'não':
             print(f'\nO valor total é de R$ {sum(total):.2f}.\nDirija-se ao caixa para efetuar o pagamento.') 
