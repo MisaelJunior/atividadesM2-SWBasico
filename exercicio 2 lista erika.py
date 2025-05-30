@@ -83,8 +83,7 @@ def opcoes():
         if opcao != 0:
             while not ((resposta == 's') or (resposta == 'sim') or (resposta == 'n') or (resposta == 'não')):
                 resposta = input('\nDeseja algo mais? s/n\n')
-                os.system('cls')
-                menu()
+                
 
         if resposta == 'n' or resposta == 'não':
             os.system('cls')
@@ -92,7 +91,8 @@ def opcoes():
             print(f'\nO valor total é de R$ {sum(total):.2f}.\nDirija-se ao caixa para efetuar o pagamento.')
             break
         else:
-            None
+            os.system('cls')
+            menu()
 
 opcao = ''
 while opcao != 0:
