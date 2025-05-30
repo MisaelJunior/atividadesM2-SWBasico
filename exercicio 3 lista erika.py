@@ -3,11 +3,13 @@
 import os
 
 jogador_1 = input('Jogador(a) 1, digite seu nome: ')
-num_1 = int(input(f'\n{jogador_1}, escolha um número entre 1 e 10: '))
 
-while num_1 <1 or num_1 >10:
-    print('\nOpção inválida, tente novamente.\n')
+while True:
     num_1 = int(input(f'{jogador_1}, escolha um número entre 1 e 10: '))
+    if num_1<1 or num_1>10:
+        print('\nOpção inválida, tente novamente.\n')
+    else:
+        break
 
 os.system('cls')
 
