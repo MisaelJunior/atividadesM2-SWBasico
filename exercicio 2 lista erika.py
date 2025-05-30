@@ -5,14 +5,17 @@ import os
 total = []
 itens = []
 valores = []
+quantidade = []
+precos =[]
+
 
 cardapio = {
     100: ('Cachorro Quente', 3.50),
-    101: ('Bauru Simples', 3.80),
-    102: ('Bauru com Ovo', 4.50),
-    103: ('Hamburger', 4.70),
-    104: ('Cheeseburger', 5.30),
-    105: ('Refrigerante', 4.00)
+    101: ('Bauru Simples  ', 3.80),
+    102: ('Bauru com Ovo  ', 4.50),
+    103: ('Hamburger      ', 4.70),
+    104: ('Cheeseburger   ', 5.30),
+    105: ('Refrigerante   ', 4.00)
 }
 
 def menu():
@@ -23,7 +26,7 @@ def menu():
     print('103 - Hamburger - R$ 4,70')
     print('104 - Cheeseburger - R$ 5,30')
     print('105 - Refrigerante - R$ 4,00')
-    print('0 - Sair\n')
+    print('0 - Sair/Cancelar\n')
 
 def opcoes():
     while (True):
@@ -55,6 +58,8 @@ def opcoes():
                 total.append(valor)
                 itens.append(nome)
                 valores.append(valor)
+                quantidade.append(qntd)
+                precos.append(preco)
                 print(f'\nO valor a ser pago pelo(s) {nome} é de R$ {valor:.2f}.\nSubtotal: R$ {sum(total):.2f}')
             
         elif opcao == 0:
@@ -67,12 +72,17 @@ def opcoes():
 
         while not ((resposta == 's') or (resposta == 'sim') or (resposta == 'n') or (resposta == 'não')):
             resposta = input('\nDeseja algo mais? s/n\n')
+            os.system('cls')
+            menu()
 
         if resposta == 'n' or resposta == 'não':
-            print('\n-----Lista de Compras-----\nQuantidade de produtos: ', len(itens))
-            
-            for i in itens:
-                print(i)
+            os.system('cls')
+            print('\n--------------Lista de Compras--------------\nQuantidade de produtos: ', len(itens))
+            print('     ITEM       | QTD | VALOR(un) |  TOTAL\n--------------------------------------------')
+            for i in range(len(itens)):
+                print(f'{itens[i]} |  {quantidade[i]}  x  R$ {precos[i]}   | R$ {valores[i]:.2f}')
+                if i+1 == len(itens):
+                    print(f'                                   Valor total = R$ {sum(total):.2f}')
             print(f'\nO valor total é de R$ {sum(total):.2f}.\nDirija-se ao caixa para efetuar o pagamento.') 
             break
         else:
