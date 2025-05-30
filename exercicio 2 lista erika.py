@@ -3,6 +3,8 @@
 import os
 
 total = []
+itens = []
+valores = []
 
 cardapio = {
     100: ('Cachorro Quente', 3.50),
@@ -36,27 +38,25 @@ def opcoes():
 
 
         if opcao in cardapio:
-            nome, preco = cardapio [opcao]
+            nome, preco = cardapio[opcao]
 
             while True:
                 try:
                     qntd = int(input(f'\nQuantos {nome} irá levar? '))
-                    if qntd < 1:
-                        print('Digite um número maior ou igual a 1.')
+                    if qntd < 0:
+                        print('Digite um número maior ou igual a 0.')
                     else:
                         break
                 except ValueError:
                     print('Opção inválida! Digite um número inteiro.')
 
-                        
-
-
             valor = qntd * preco
-            total.append(valor)
-            print(f'\nO valor a ser pago pelo(s) {nome} é de R$ {valor:.2f}.\nSubtotal: R$ {sum(total):.2f}')
+            if qntd != 0:
+                total.append(valor)
+                itens.append(nome)
+                valores.append(preco)
+                print(f'\nO valor a ser pago pelo(s) {nome} é de R$ {valor:.2f}.\nSubtotal: R$ {sum(total):.2f}')
             
-            
-           
         elif opcao == 0:
             print ('Sair.')
             break
@@ -69,6 +69,9 @@ def opcoes():
             resposta = input('\nDeseja algo mais? s/n\n')
 
         if resposta == 'n' or resposta == 'não':
+            print('\nItens do pedido:')
+            for i in itens:
+                print(i)
             print(f'\nO valor total é de R$ {sum(total):.2f}.\nDirija-se ao caixa para efetuar o pagamento.') 
             break
         else:
