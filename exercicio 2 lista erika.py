@@ -54,7 +54,7 @@ def opcoes():
             if qntd != 0:
                 total.append(valor)
                 itens.append(nome)
-                valores.append(preco)
+                valores.append(valor)
                 print(f'\nO valor a ser pago pelo(s) {nome} é de R$ {valor:.2f}.\nSubtotal: R$ {sum(total):.2f}')
             
         elif opcao == 0:
@@ -69,7 +69,8 @@ def opcoes():
             resposta = input('\nDeseja algo mais? s/n\n')
 
         if resposta == 'n' or resposta == 'não':
-            print('\nItens do pedido:')
+            print('\n-----Lista de Compras-----\nQuantidade de produtos: ', len(itens))
+            
             for i in itens:
                 print(i)
             print(f'\nO valor total é de R$ {sum(total):.2f}.\nDirija-se ao caixa para efetuar o pagamento.') 
