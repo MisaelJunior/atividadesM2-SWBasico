@@ -67,6 +67,15 @@ def menu():
     print('4. Reservar hotel')
     print('5. Listar todos os dados cadastrados')
     print('6. Sair')
+    
+def executar(comando):
+    if comando == 1: criar_usuario()
+    elif comando == 2: agendar_consulta()
+    elif comando == 3: comprar_passagem()
+    elif comando == 4: reservar_hotel()
+    elif comando == 5: listar_dados()
+    elif comando == 6: print('\nSair')
+    else: print('\nOpção inválida.')
 
 def criar_usuario():
     print('\n--- NOVO USUÁRIO ---')
@@ -134,15 +143,6 @@ def listar_dados():
     print('\n--- HOTÉIS RESERVADOS ---')
     for hotel in reservas_hoteis:
         hotel.exibir_dados()
-
-def executar(comando):
-    if comando == 1: criar_usuario()
-    elif comando == 2: agendar_consulta()
-    elif comando == 3: comprar_passagem()
-    elif comando == 4: reservar_hotel()
-    elif comando == 5: listar_dados()
-    elif comando == 6: print('\nSair')
-    else: print('\nOpção inválida.')
 
 comando = 0
 
