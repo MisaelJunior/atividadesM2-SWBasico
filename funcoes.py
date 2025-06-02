@@ -3,7 +3,13 @@ import os
 
 cpf = ''
 
-usuarios = {}
+usuarios = {"470.331.668-42":{
+    "nome": 'Misael',
+    "cpf": '470.331.668-42',
+    "telefone": '11998473130',
+    "email": 'misael@umc.br',
+    "viagens":[]
+}}
 
 chaves_de_acesso = ['1234']
 
@@ -52,7 +58,8 @@ def criar_usuario():
             "nome": nome,
             "cpf": cpf,
             "telefone": tel,
-            "email": email
+            "email": email,
+            "viagens": []
         }
         print('Usuário cadastrado com sucesso.')
         
@@ -75,6 +82,22 @@ def comprar_passagem():
             print('Tipo de transporte escolhido: Aéreo')
             while True:
                 try:
+                    r = input('Gosataria de ver todos os locais de partida disponíveis? s/n')
+                    if r.lower() == 's' or r.lower() == 'sim':
+                        for i in destinos_rodoviario:
+                            print(i)
+                        break
+                    elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
+                        break
+                    else:
+                        print('Opção inválida!')
+                except ValueError:
+                    print('O tipo de dado inserido é inválido, tente novamente!')
+            
+            input('Pressione a tecla Enter para continuar')
+                    
+            while True:
+                try:
                     a = input('Escolha o local de partida: ')
                     if a.upper() in destinos_rodoviario:
                         print(f'Local de partida definido! {a.upper()}')
@@ -83,6 +106,23 @@ def comprar_passagem():
                         print('Local de partida não disponível ou incorreto!')
                 except ValueError:
                     print('O tipo de dado inserido é inválido, tente novamente!')
+                    
+            while True:
+                try:
+                    r = input('Gosataria de ver todos os locais de destino disponíveis? s/n')
+                    if r.lower() == 's' or r.lower() == 'sim':
+                        for i in destinos_aereo:
+                            print(i)
+                        break
+                    elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
+                        break
+                    else:
+                        print('Opção inválida!')
+                except ValueError:
+                    print('O tipo de dado inserido é inválido, tente novamente!')
+                    
+            input('Pressione a tecla Enter para continuar')
+                    
             while True:
                 try:
                     b = input('Escolha o local de destino: ')
@@ -94,17 +134,39 @@ def comprar_passagem():
                 except ValueError:
                     print('O tipo de dado inserido é inválido, tente novamente!')
 
-            usuarios[cpf] = {
-                "viagens": {
-                    "partida": a,
-                    "destino": b,
-                    "data": None,
-                    "viagens": None
-                }
-            }
+            usuarios[cpf]["viagens"].append({
+                    "partida": a.upper(),
+                    "destino": b.upper(),
+                    "data de ida": None,
+                    "data de volta": None,
+                })   
+            
+            data_ida, data_volta = reservar_data()
+
+            # Atualiza as datas da última viagem registrada
+            usuarios[cpf]["viagens"][-1]["data de ida"] = str(data_ida)
+            usuarios[cpf]["viagens"][-1]["data de volta"] = str(data_volta)
+
+            
             
         elif tipo_de_transporte == 2:
             print('Tipo de transporte escolhido: Rodoviário')
+            while True:
+                try:
+                    r = input('Gosataria de ver todos os locais de partida disponíveis? s/n')
+                    if r.lower() == 's' or r.lower() == 'sim':
+                        for i in destinos_rodoviario:
+                            print(i)
+                        break
+                    elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
+                        break
+                    else:
+                        print('Opção inválida!')
+                except ValueError:
+                    print('O tipo de dado inserido é inválido, tente novamente!')
+            
+            input('Pressione a tecla Enter para continuar')
+            
             while True:
                 try:
                     a = input('Escolha o local de partida: ')
@@ -117,6 +179,22 @@ def comprar_passagem():
                     print('O tipo de dado inserido é inválido, tente novamente!')
             while True:
                 try:
+                    r = input('Gosataria de ver todos os locais de destino disponíveis? s/n')
+                    if r.lower() == 's' or r.lower() == 'sim':
+                        for i in destinos_rodoviario:
+                            print(i)
+                        break
+                    elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
+                        break
+                    else:
+                        print('Opção inválida!')
+                except ValueError:
+                    print('O tipo de dado inserido é inválido, tente novamente!')
+            
+            input('Pressione a tecla Enter para continuar')
+            
+            while True:
+                try:
                     b = input('Escolha o local de destino: ')
                     if b.upper() in destinos_rodoviario:
                         print(f'Local de destino definido! {b.upper()}')
@@ -126,16 +204,31 @@ def comprar_passagem():
                 except ValueError:
                     print('O tipo de dado inserido é inválido, tente novamente!')
                     
-            usuarios[cpf] = {
-                "viagens": {
-                    "partida": a,
-                    "destino": b,
-                    "data": None
-                }
-            }        
+            usuarios[cpf]["viagens"].append({
+                    "partida": a.upper(),
+                    "destino": b.upper(),
+                    "data de ida": None,
+                    "data de volta": None,
+                })        
                     
         else:
             print('Tipo de transporte escolhido: Ferroviário')
+            while True:
+                try:
+                    r = input('Gosataria de ver todos os locais de partida disponíveis? s/n')
+                    if r.lower() == 's' or r.lower() == 'sim':
+                        for i in destinos_ferroviario:
+                            print(i)
+                        break
+                    elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
+                        break
+                    else:
+                        print('Opção inválida!')
+                except ValueError:
+                    print('O tipo de dado inserido é inválido, tente novamente!')
+            
+            input('Pressione a tecla Enter para continuar')
+            
             while True:
                 try:
                     a = input('Escolha o local de partida: ')
@@ -146,6 +239,23 @@ def comprar_passagem():
                         print('Local de partida não disponível ou incorreto!')
                 except ValueError:
                     print('O tipo de dado inserido é inválido, tente novamente!')
+                    
+            while True:
+                try:
+                    r = input('Gosataria de ver todos os locais de destino disponíveis? s/n')
+                    if r.lower() == 's' or r.lower() == 'sim':
+                        for i in destinos_ferroviario:
+                            print(i)
+                        break
+                    elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
+                        break
+                    else:
+                        print('Opção inválida!')
+                except ValueError:
+                    print('O tipo de dado inserido é inválido, tente novamente!')
+            
+            input('Pressione a tecla Enter para continuar')
+            
             while True:
                 try:
                     b = input('Escolha o local de destino: ')
@@ -157,14 +267,14 @@ def comprar_passagem():
                 except ValueError:
                     print('O tipo de dado inserido é inválido, tente novamente!')
                     
-            usuarios[cpf] = {
-                "viagens": {
-                    "partida": a,
-                    "destino": b,
-                    "data": None
-                }
-            }
+            usuarios[cpf]["viagens"].append({
+                    "partida": a.upper(),
+                    "destino": b.upper(),
+                    "data de ida": None,
+                    "data de volta": None,
+                })
         
+        reservar_data()
                
     else:
         print('CPF não cadastrado.\nRealize o cadastro ou corrija as informações para continuar.')
@@ -186,13 +296,24 @@ def comprar_passagem():
 def reservar_data():
         while True:
             try:
-                data_str = input("Insira uma data no formato AAAA-MM-DD: ")
-                data = datetime.strptime(data_str, "%Y-%m-%d")
+                data_str = input("Insira data de ida no formato AAAA-MM-DD: ")
+                data1 = datetime.strptime(data_str, "%Y-%m-%d")
+                break 
+            except ValueError:
+                print("Data inválida. Por favor, insira no formato AAAA-MM-DD.")
+                
+        while True:
+            try:
+                data_str = input("Insira data de volta no formato AAAA-MM-DD: ")
+                data2 = datetime.strptime(data_str, "%Y-%m-%d")
                 break 
             except ValueError:
                 print("Data inválida. Por favor, insira no formato AAAA-MM-DD.")
         
-        print(f'Data {data} reservada com sucesso!')
+        print(f'Datas {data1.date()} - {data2.date()} reservadas com sucesso!')
+        return data1.date(), data2.date()
+        
+          
 
 def reservar_hotel():
     print('\n--- RESERVAR HOTEL ---')
@@ -241,13 +362,17 @@ def verifica_clientes():
     senha_adm = input('Insira sua chave de acesso administrativa: ')
     if senha_adm in chaves_de_acesso:
         os.system('cls')
-        print(usuarios)
         print('\n--------------Lista de usuários--------------\nQuantidade de usuários: ', len(usuarios))
         print('     NOME       | CPF | TELEFONE |  VIAGENS')
         for i in usuarios:
-            print(usuarios[cpf]["viagens"]) 
-            if i+1 == len(usuarios):
-                print('TODOS OS USUARIOS NO BANCO DE DADOS FORAM MOSTRADOS')
+            print(f'\nUsuário: {usuarios[i]["nome"]}')
+            print(f'CPF: {usuarios[i]["cpf"]}')
+            print(f'Telefone: {usuarios[i]["telefone"]}')
+            print(f'Email: {usuarios[i]["email"]}')
+            print(f'Viagens:')
+            for j in usuarios[i]["viagens"]:
+                print(f' IDA  --- Partida: {j["partida"]}, Destino: {j["destino"]}, Data: {j["data de ida"]}')
+                print(f'VOLTA --- Partida: {j["destino"]}, Destino: {j["partida"]}, Data: {j["data de volta"]}')
                                                    
     else:
         print('Chave de acesso Incorreta')
