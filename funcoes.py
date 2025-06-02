@@ -1,3 +1,4 @@
+from datetime import datetime
 usuarios = {}
 destinos_aereo = []
 destinos_rodoviario = []
@@ -63,6 +64,7 @@ def comprar_passagem():
         
         if tipo_de_transporte == 1:
             print('Tipo de transporte escolhido: Aéreo')
+
         elif tipo_de_transporte == 2:
             print('Tipo de transporte escolhido: Rodoviário')
         else:
@@ -72,7 +74,17 @@ def comprar_passagem():
     else:
         print('CPF não cadastrado.\nRealize o cadastro para continuar.')
         criar_usuario()
-    
+        
+def reservar_data():
+        while True:
+            try:
+                data_str = input("Insira uma data no formato AAAA-MM-DD: ")
+                data = datetime.strptime(data_str, "%Y-%m-%d")
+                break 
+            except ValueError:
+                print("Data inválida. Por favor, insira no formato AAAA-MM-DD.")
+        
+        print(f'Data {data} reservada com sucesso!')
 
 def reservar_hotel():
     print('\n--- RESERVAR HOTEL ---')
