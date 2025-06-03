@@ -16,7 +16,17 @@ usuarios = {"470.331.668-42":{
     "viagens":[]
 }}
 
-chaves_de_acesso = ['1234']
+funcionarios = {"11251102593":{
+    "id": '11251102593',
+    "nome": 'Misael',
+    "cpf": '470.331.668-42',
+    "telefone": '11998473130',
+    "email": 'misael@umc.br',
+    "chave de acesso": '1234',
+    
+}}
+
+chaveMestra = ['1234']
 
 destinos_aereo = ["NOVA YORK", "PARIS", "LONDRES", "TÓQUIO", "DUBAI", "ROMA", "BARCELONA", "BANGCOC", "SYDNEY", "HONG KONG", "SÃO PAULO", "RIO DE JANEIRO", "FORTALEZA", "SALVADOR", "MANAUS", "PORTO ALEGRE", "BELO HORIZONTE"]
 destinos_rodoviario = ["RIO BRANCO", "MACEIÓ", "MACAPÁ", "MANAUS", "SALVADOR", "FORTALEZA", "BRASÍLIA", "VITÓRIA", "GOIÂNIA", "SÃO LUÍS","CUIABÁ", "CAMPO GRANDE", "BELO HORIZONTE", "BELÉM", "JOÃO PESSOA", "CURITIBA", "RECIFE", "TERESINA", "RIO DE JANEIRO", "NATAL", "PORTO ALEGRE", "PORTO VELHO", "BOA VISTA", "FLORIANÓPOLIS", "SÃO PAULO", "ARACAJU", "PALMAS"]
@@ -26,7 +36,7 @@ def menu():
     print('APLICATIVO DE RESERVAS\n')
     print('1. Criar usuário')
     print('2. Comprar passagem')
-    print('3. Reservar hotel')
+    print('3. Cadastro de Funcionários')
     print('4. Meu Perfil')
     print('5. Minhas reservas')
     print('6. Menu Administrativo')
@@ -60,7 +70,7 @@ def executar(comando):
                 comprar_passagem()
                 break
             elif comando == 3:
-                reservar_hotel()
+                cadastrarFuncionario()
                 break
             elif comando == 4:
                 meuPerfil()
@@ -80,14 +90,50 @@ def executar(comando):
 def sair():
     print('\nSair.')
     sys.exit()    
+def cadastrarFuncionario():
+    mestra = input('É necessário entrar com a chave mestra para cadastrar um novo funcionário: ')
+    if mestra in chaveMestra:
+        print('\n--- CADASTRO DE FUNCIONÁRIO ---')
+        nome = input('\nDigite o nome do funcionário: ')
+        id = input('\nDigite o ID do funcionário: ') 
+        cpf = input('\nDigite o CPF do usuário (Utilize o formato 123.456.789-00): ')
+
+        if id in funcionarios:
+            print('ID já cadastrado')
+        else:
+            tel = input('Telefone: ')
+            email = input('Email: ')
+            while True:
+                chave = input('Crie uma chave de acesso: ')
+                if len(chave) < 8:
+                    print('A chave de acesso deve possuir pelo menos 8 caracteres')
+                else:
+                    os.system('cls')
+                    print('Chave de acesso cadastrada com sucesso')
+                    break
+
+                
+            funcionarios[id] = {
+                "id": id,
+                "nome": nome,
+                "cpf": cpf,
+                "telefone": tel,
+                "email": email,
+                "chave de acesso": chave,
+            }
+            print('Funcionário cadastrado com sucesso.')
+    else: 
+        print('Chave mestra não confere.')
+        sair()
+        
 def criar_usuario():
     print('\n--- NOVO USUÁRIO ---')
     nome = input('\nDigite o nome do usuário: ')
     cpf = input('\nDigite o CPF do usuário (Utilize o formato 123.456.789-00): ')
 
-    if cpf in usuarios:#consultando se o cpf já foi cadastrado
+    if cpf in usuarios:
         print('CPF já cadastrado')
-    else:#cadastrando o usuário
+    else:
         tel = input('Telefone: ')
         email = input('Email: ')
         while True:
@@ -142,7 +188,7 @@ def comprar_passagem():
             print('Tipo de transporte escolhido: Aéreo')
             while True:
                 try:
-                    r = input('Gosataria de ver todos os locais de partida disponíveis? s/n')
+                    r = input('Gosataria de ver todos os locais de partida disponíveis? s/n\n')
                     if r.lower() == 's' or r.lower() == 'sim':
                         for i in destinos_rodoviario:
                             print(i)
@@ -154,7 +200,7 @@ def comprar_passagem():
                 except ValueError:
                     print('O tipo de dado inserido é inválido, tente novamente!')
             
-            input('Pressione a tecla Enter para continuar')
+            input('Pressione a tecla Enter para continuar\n')
                     
             while True:
                 try:
@@ -169,7 +215,7 @@ def comprar_passagem():
                     
             while True:
                 try:
-                    r = input('Gosataria de ver todos os locais de destino disponíveis? s/n')
+                    r = input('Gosataria de ver todos os locais de destino disponíveis? s/n\n')
                     if r.lower() == 's' or r.lower() == 'sim':
                         for i in destinos_aereo:
                             print(i)
@@ -181,7 +227,7 @@ def comprar_passagem():
                 except ValueError:
                     print('O tipo de dado inserido é inválido, tente novamente!')
                     
-            input('Pressione a tecla Enter para continuar')
+            input('Pressione a tecla Enter para continuar\n')
                     
             while True:
                 try:
@@ -360,6 +406,7 @@ def comprar_passagem():
                     print('O tipo de dado inserido é inválido, tente novamente!')
         
 def reservar_data():
+    while True:
         while True:
             try:
                 data_str = input("Insira data de ida no formato AAAA-MM-DD: ")
@@ -372,25 +419,15 @@ def reservar_data():
             try:
                 data_str = input("Insira data de volta no formato AAAA-MM-DD: ")
                 data2 = datetime.strptime(data_str, "%Y-%m-%d")
-                break 
+                if data2 >= data1:
+                    break
+                else:
+                    print("A data de volta NÃO pode ser ANTERIOR a data de ida.") 
             except ValueError:
                 print("Data inválida. Por favor, insira no formato AAAA-MM-DD.")
         
         print(f'Datas {data1.date()} - {data2.date()} reservadas com sucesso!')
-        return data1.date(), data2.date()
-        
-def reservar_hotel():
-    print('\n--- RESERVAR HOTEL ---')
-    nome_hotel = input('\nDigite o nome do hotel: ')
-    localizacao = input('\nDigite a localização do hotel: ')
-    data_checkin = input('\nDigite a data de check-in: ')
-    data_checkout = input('\nDigite a data de check-out: ')
-
-    hotel = Reserva_Hotel(nome_hotel, localizacao, data_checkin, data_checkout)
-    reservas_hoteis.append(hotel)
-
-    print(f'\nQuarto do hotel {nome_hotel} reservado com sucesso!\n')
-    hotel.exibir_dados()
+        return data1.date(), data2.date()    
     
 def meuPerfil():
     print('\n-------------------------------Meu Perfil--------------------------------\nLOGIN')
@@ -485,7 +522,8 @@ def meuPerfil():
                         gerar_passagem(cpf)
                     else:
                         print("Nenhuma viagem cadastrada. Não é possível gerar código.")
-                    break
+                        input('Pressione a tecla Enter para continuar')
+                        os.system('cls')
                 else:
                     None
                     break
@@ -523,106 +561,108 @@ def minhas_reservas():
                 print(f'VOLTA --- Partida: {j["destino"]}, Destino: {j["partida"]}, Data: {j["data de volta"]}')
 
 def verifica_clientes():
-    senha_adm = input('Insira sua chave de acesso administrativa: ')
-    if senha_adm in chaves_de_acesso:
-        while True:
-            os.system('cls')
-            print('1. Cadastrar Usuário\n2. Consultar usuário\n3. Alterar dados de usuário\n4. Consultar lista de usuários\n5. Voltar')
-            acao = int(input('Que ação deseja realizar? '))
-            try:
-                if acao == 1:
-                    criar_usuario()
-                    break
-                elif acao == 2:
-                    cpf = input('Insira o CPF para a Busca: ')
-                    consultaUsuario(cpf)
-                    break
-                elif acao == 3:
-                    cpf = input('Insira o CPF para a Busca: ')
-                    consultaUsuario(cpf)
-                    while True:
-                        try:
-                            print('Perfil do usuário-----------------------------------')
-                            print('1. Nome\n2. Telefone\n3. Email\n4. Recadastro\n5. Voltar')
-                            while True:
-                                try:
-                                    escolha = int(input('Selecione qual dado deseja alterar: '))
-                                    if escolha < 1 or escolha > 5:
-                                        print('Opção Inválida!')
-                                    else:
-                                        print(escolha)
-                                        break
-                                except ValueError:
-                                    print('Tipo de dado inserido inválido!')
-
-                            if escolha == 1:
-                                nome = input('Insira o novo nome: ')
-                                usuarios[cpf]["nome"] = nome
-                                print('Nome alterado com sucesso!')
-                                input('Pressione a tecla Enter para continuar')
-                                break
-                            elif escolha == 2:
-                                telefone = input('Insira o novo número de telefone: ')
-                                usuarios[cpf]["telefone"] = telefone
-                                print('Telefone alterado com sucesso!')
-                                input('Pressione a tecla Enter para continuar')
-                                break
-                            elif escolha == 3:
-                                email = input('Insira o novo email: ')
-                                usuarios[cpf]["email"] = email
-                                print('Email alterado com sucesso!')
-                                input('Pressione a tecla Enter para continuar')
-                                break
-                            elif escolha == 4:
-                                print('Ao confirmar seu cadastro será excluído e você será direcionado(a) a criação de um novo cadastro')
+    id = input('Funcionário, insira seu ID: ')
+    if id in funcionarios:
+        senha_adm = input('Insira sua chave de acesso administrativa: ')
+        if senha_adm == funcionarios[id]["chave de acesso"]:
+            while True:
+                os.system('cls')
+                print('1. Cadastrar Usuário\n2. Consultar usuário\n3. Alterar dados de usuário\n4. Consultar lista de usuários\n5. Voltar')
+                acao = int(input('Que ação deseja realizar? '))
+                try:
+                    if acao == 1:
+                        criar_usuario()
+                        break
+                    elif acao == 2:
+                        cpf = input('Insira o CPF para a Busca: ')
+                        consultaUsuario(cpf)
+                        break
+                    elif acao == 3:
+                        cpf = input('Insira o CPF para a Busca: ')
+                        consultaUsuario(cpf)
+                        while True:
+                            try:
+                                print('Perfil do usuário-----------------------------------')
+                                print('1. Nome\n2. Telefone\n3. Email\n4. Recadastro\n5. Voltar')
                                 while True:
                                     try:
-                                        r = input('Deseja excluir o cadastro atual e criar um novo usuário? s/n ')
-                                        if r.lower() == 's' or r.lower() == 'sim' :
-                                            cpf = input('Excluindo cadastro...\nConfirme o seu CPF: ')
-                                            validarSenha(cpf)
-                                            del usuarios[cpf]
-                                            print('Usuário excluído com sucesso!')
-                                            criar_usuario()
-                                            break
-                                        elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
-                                            break
+                                        escolha = int(input('Selecione qual dado deseja alterar: '))
+                                        if escolha < 1 or escolha > 5:
+                                            print('Opção Inválida!')
                                         else:
-                                            print('Opção inválida!')
+                                            print(escolha)
+                                            break
                                     except ValueError:
-                                        print('O tipo de dado inserido é inválido, tente novamente!')
-                                input('Pressione a tecla Enter para continuar')
-                                break
-                            else:
-                                None
-                                break
-                        except ValueError:
-                                print('O tipo de dado inserido é inválido, tente novamente!')
-                                input('Pressione a tecla Enter para continuar')
-                elif acao == 4:
-                    print('\n-------------------------------Lista de usuários--------------------------------\nQuantidade de usuários: ', len(usuarios))
-                    for i in usuarios:#mostra os dados pessoais de cada usuário cadastrado. OBS: note que a senha cadastrada pelo usuário não é mostrada por segurança
-                        print('')
-                        print('-' *80)
-                        print(f'\nUsuário: {usuarios[i]["nome"]}')
-                        print(f'CPF: {usuarios[i]["cpf"]}')
-                        print(f'Telefone: {usuarios[i]["telefone"]}')
-                        print(f'Email: {usuarios[i]["email"]}')
-                        print(f'Viagens:')
-                        for j in usuarios[i]["viagens"]:
-                            print(f' IDA  --- Partida: {j["partida"]}, Destino: {j["destino"]}, Data: {j["data de ida"]}')
-                            print(f'VOLTA --- Partida: {j["destino"]}, Destino: {j["partida"]}, Data: {j["data de volta"]}')
-                    break
-                elif acao == 5:
-                    break
-                else: print('\nOpção inválida.')
-            except ValueError:
-                print('\nOpção inválida.')
-        input('\nPressione a tecla Enter para continuar')
-                                                   
-    else:
-        print('Chave de acesso Incorreta')
-        sys.exit()
+                                        print('Tipo de dado inserido inválido!')
+
+                                if escolha == 1:
+                                    nome = input('Insira o novo nome: ')
+                                    usuarios[cpf]["nome"] = nome
+                                    print('Nome alterado com sucesso!')
+                                    input('Pressione a tecla Enter para continuar')
+                                    break
+                                elif escolha == 2:
+                                    telefone = input('Insira o novo número de telefone: ')
+                                    usuarios[cpf]["telefone"] = telefone
+                                    print('Telefone alterado com sucesso!')
+                                    input('Pressione a tecla Enter para continuar')
+                                    break
+                                elif escolha == 3:
+                                    email = input('Insira o novo email: ')
+                                    usuarios[cpf]["email"] = email
+                                    print('Email alterado com sucesso!')
+                                    input('Pressione a tecla Enter para continuar')
+                                    break
+                                elif escolha == 4:
+                                    print('Ao confirmar seu cadastro será excluído e você será direcionado(a) a criação de um novo cadastro')
+                                    while True:
+                                        try:
+                                            r = input('Deseja excluir o cadastro atual e criar um novo usuário? s/n ')
+                                            if r.lower() == 's' or r.lower() == 'sim' :
+                                                cpf = input('Excluindo cadastro...\nConfirme o seu CPF: ')
+                                                validarSenha(cpf)
+                                                del usuarios[cpf]
+                                                print('Usuário excluído com sucesso!')
+                                                criar_usuario()
+                                                break
+                                            elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
+                                                break
+                                            else:
+                                                print('Opção inválida!')
+                                        except ValueError:
+                                            print('O tipo de dado inserido é inválido, tente novamente!')
+                                    input('Pressione a tecla Enter para continuar')
+                                    break
+                                else:
+                                    None
+                                    break
+                            except ValueError:
+                                    print('O tipo de dado inserido é inválido, tente novamente!')
+                                    input('Pressione a tecla Enter para continuar')
+                    elif acao == 4:
+                        print('\n-------------------------------Lista de usuários--------------------------------\nQuantidade de usuários: ', len(usuarios))
+                        for i in usuarios:#mostra os dados pessoais de cada usuário cadastrado. OBS: note que a senha cadastrada pelo usuário não é mostrada por segurança
+                            print('')
+                            print('-' *80)
+                            print(f'\nUsuário: {usuarios[i]["nome"]}')
+                            print(f'CPF: {usuarios[i]["cpf"]}')
+                            print(f'Telefone: {usuarios[i]["telefone"]}')
+                            print(f'Email: {usuarios[i]["email"]}')
+                            print(f'Viagens:')
+                            for j in usuarios[i]["viagens"]:
+                                print(f' IDA  --- Partida: {j["partida"]}, Destino: {j["destino"]}, Data: {j["data de ida"]}')
+                                print(f'VOLTA --- Partida: {j["destino"]}, Destino: {j["partida"]}, Data: {j["data de volta"]}')
+                        break
+                    elif acao == 5:
+                        break
+                    else: print('\nOpção inválida.')
+                except ValueError:
+                    print('\nOpção inválida.')
+            input('\nPressione a tecla Enter para continuar')
+                                                    
+        else:
+            print('Chave de acesso Incorreta')
+            sys.exit()
 
 def gerar_valor(viagem, tipo_transporte):
     
@@ -647,7 +687,7 @@ def gerar_passagem(cpf):
         viagem = usuarios[cpf]["viagens"][-1] 
         
         if "assento" not in viagem:
-            viagem["assento"] = gerar_assento()
+            viagem["assento"] = gerarAssento()
 
         destino = viagem["destino"]
         if destino in destinos_aereo:
@@ -678,7 +718,7 @@ def gerar_passagem(cpf):
     else:
         print("Usuário não encontrado ou nenhuma viagem registrada.")
 
-def gerar_assento():
+def gerarAssento():
     fileira = random.randint(1, 30)              
     coluna = random.choice(['A', 'B', 'C', 'D'])  
     return f"{fileira}{coluna}"
