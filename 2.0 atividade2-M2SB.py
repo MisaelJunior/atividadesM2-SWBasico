@@ -16,4 +16,21 @@ while comando != 6:
     funcoes.menu()
     comando = int(input('\nEscolha uma opção: '))
     funcoes.executar(comando)
+    while True:
+        try:
+            resp = input('Deseja voltar ao menu principal? s/n\n')
+            if resp.lower() == 's' or resp.lower() == 'sim':
+                os.system('cls')
+                funcoes.menu()
+                comando = int(input('\nEscolha uma opção: '))
+                funcoes.executar(comando)
+            elif resp.lower() == 'n' or resp.lower() == 'não' or resp.lower() == 'nao':
+                comando = 6
+                break
+            else:
+                print('Valor inválido')
+        except ValueError:
+            print('Tipo de dado inserido inválido!')
+            
     input('\nPressione qualquer tecla.')
+    
