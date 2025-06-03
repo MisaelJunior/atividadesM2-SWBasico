@@ -1,5 +1,6 @@
 from datetime import datetime
 import os
+import sys
 
 cpf = ''
 
@@ -8,6 +9,7 @@ usuarios = {"470.331.668-42":{
     "cpf": '470.331.668-42',
     "telefone": '11998473130',
     "email": 'misael@umc.br',
+    "senha": '1234',
     "viagens":[]
 }}
 
@@ -15,7 +17,7 @@ chaves_de_acesso = ['1234']
 
 destinos_aereo = ["NOVA YORK", "PARIS", "LONDRES", "TÓQUIO", "DUBAI", "ROMA", "BARCELONA", "BANGCOC", "SYDNEY", "HONG KONG", "SÃO PAULO", "RIO DE JANEIRO", "FORTALEZA", "SALVADOR", "MANAUS", "PORTO ALEGRE", "BELO HORIZONTE"]
 destinos_rodoviario = ["RIO BRANCO", "MACEIÓ", "MACAPÁ", "MANAUS", "SALVADOR", "FORTALEZA", "BRASÍLIA", "VITÓRIA", "GOIÂNIA", "SÃO LUÍS","CUIABÁ", "CAMPO GRANDE", "BELO HORIZONTE", "BELÉM", "JOÃO PESSOA", "CURITIBA", "RECIFE", "TERESINA", "RIO DE JANEIRO", "NATAL", "PORTO ALEGRE", "PORTO VELHO", "BOA VISTA", "FLORIANÓPOLIS", "SÃO PAULO", "ARACAJU", "PALMAS"]
-destinos_ferroviario = ["SÃO PAULO", "RIO DE JANEIRO", "BELO HORIZONTE", "CURITIBA", "SALVADOR", "FORTALEZA", "RECIFE", "PORTO ALEGRE","BRASÍLIA", "MANAUS", "Campinas", "GOIÂNIA", "NATAL", "FLORIANÓPOLIS", "BELÉM", "VITÓRIA", "SÃO LUÍS", "JOÃO PESSOA", "MACEIÓ", "CUIABÁ"]
+destinos_ferroviario = ["SÃO PAULO", "RIO DE JANEIRO", "BELO HORIZONTE", "CURITIBA", "SALVADOR", "FORTALEZA", "RECIFE", "PORTO ALEGRE","BRASÍLIA", "MANAUS", "CAMPINAS", "GOIÂNIA", "NATAL", "FLORIANÓPOLIS", "BELÉM", "VITÓRIA", "SÃO LUÍS", "JOÃO PESSOA", "MACEIÓ", "CUIABÁ"]
 
 def menu():
     print('APLICATIVO DE RESERVAS\n')
@@ -53,12 +55,22 @@ def criar_usuario():
     else:#cadastrando o usuário
         tel = input('Telefone: ')
         email = input('Email: ')
+        while True:
+            senha = input('Crie uma senha: ')
+            if len(senha) < 8:
+                print('A senha deve possuir pelo menos 8 caracteres')
+            else:
+                os.system('cls')
+                print('Senha cadastrada com sucesso')
+                break
+                
         
         usuarios[cpf] = {
             "nome": nome,
             "cpf": cpf,
             "telefone": tel,
             "email": email,
+            "senha": senha,
             "viagens": []
         }
         print('Usuário cadastrado com sucesso.')
@@ -67,6 +79,17 @@ def comprar_passagem():
     print('\n--- COMPRAR PASSAGEM ---')
     cpf = input('\nDigite o CPF do usuário (Utilize o formato 123.456.789-00): ')
     if cpf in usuarios:
+        tentativa = 1
+        while True:
+            validacao = input('Entre com a senha: ')
+            if validacao == usuarios[cpf]["senha"]:#valida a senha do usuario
+                break
+            else:
+                print(f'Senha Incorreta\nTentativa {tentativa}/3')
+                tentativa += 1
+                if tentativa > 3:
+                    sys.exit()
+                
         menu_transportes()
         while True:
                 try:
@@ -143,7 +166,6 @@ def comprar_passagem():
             
             data_ida, data_volta = reservar_data()
 
-            # Atualiza as datas da última viagem registrada
             usuarios[cpf]["viagens"][-1]["data de ida"] = str(data_ida)
             usuarios[cpf]["viagens"][-1]["data de volta"] = str(data_volta)
 
@@ -209,7 +231,12 @@ def comprar_passagem():
                     "destino": b.upper(),
                     "data de ida": None,
                     "data de volta": None,
-                })        
+                })  
+            
+            data_ida, data_volta = reservar_data()
+
+            usuarios[cpf]["viagens"][-1]["data de ida"] = str(data_ida)
+            usuarios[cpf]["viagens"][-1]["data de volta"] = str(data_volta)      
                     
         else:
             print('Tipo de transporte escolhido: Ferroviário')
@@ -274,7 +301,10 @@ def comprar_passagem():
                     "data de volta": None,
                 })
         
-        reservar_data()
+            data_ida, data_volta = reservar_data()
+
+            usuarios[cpf]["viagens"][-1]["data de ida"] = str(data_ida)
+            usuarios[cpf]["viagens"][-1]["data de volta"] = str(data_volta)
                
     else:
         print('CPF não cadastrado.\nRealize o cadastro ou corrija as informações para continuar.')
@@ -362,9 +392,10 @@ def verifica_clientes():
     senha_adm = input('Insira sua chave de acesso administrativa: ')
     if senha_adm in chaves_de_acesso:
         os.system('cls')
-        print('\n--------------Lista de usuários--------------\nQuantidade de usuários: ', len(usuarios))
-        print('     NOME       | CPF | TELEFONE |  VIAGENS')
-        for i in usuarios:
+        print('\n-------------------------------Lista de usuários--------------------------------\nQuantidade de usuários: ', len(usuarios))
+        for i in usuarios:#mostra os dados pessoais de cada usuário cadastrado. OBS: note que a senha cadastrada pelo usuário não é mostrada por segurança
+            print('')
+            print('-' *80)
             print(f'\nUsuário: {usuarios[i]["nome"]}')
             print(f'CPF: {usuarios[i]["cpf"]}')
             print(f'Telefone: {usuarios[i]["telefone"]}')
@@ -376,6 +407,6 @@ def verifica_clientes():
                                                    
     else:
         print('Chave de acesso Incorreta')
-        executar(6)
+        sys.exit()
                 
     
