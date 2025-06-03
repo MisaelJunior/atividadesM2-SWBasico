@@ -564,7 +564,7 @@ def verifica_clientes():
     id = input('Funcionário, insira seu ID: ')
     if id in funcionarios:
         senha_adm = input('Insira sua chave de acesso administrativa: ')
-        if senha_adm == funcionarios[id]["chave de acesso"]:
+        if (senha_adm == funcionarios[id]["chave de acesso"]) or (senha_adm in chaveMestra):
             while True:
                 os.system('cls')
                 print('1. Cadastrar Usuário\n2. Consultar usuário\n3. Alterar dados de usuário\n4. Consultar lista de usuários\n5. Voltar')
