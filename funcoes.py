@@ -74,22 +74,24 @@ def criar_usuario():
             "viagens": []
         }
         print('Usuário cadastrado com sucesso.')
+
+def validarSenha(identificador):
+    tentativa = 1
+    while True:
+        validacao = input('Entre com a senha: ')
+        if validacao == usuarios[identificador]["senha"]:#valida a senha do usuario
+            break
+        else:
+            print(f'Senha Incorreta\nTentativa {tentativa}/3')
+            tentativa += 1
+            if tentativa > 3:
+                sys.exit()
         
 def comprar_passagem():
     print('\n--- COMPRAR PASSAGEM ---')
     cpf = input('\nDigite o CPF do usuário (Utilize o formato 123.456.789-00): ')
     if cpf in usuarios:
-        tentativa = 1
-        while True:
-            validacao = input('Entre com a senha: ')
-            if validacao == usuarios[cpf]["senha"]:#valida a senha do usuario
-                break
-            else:
-                print(f'Senha Incorreta\nTentativa {tentativa}/3')
-                tentativa += 1
-                if tentativa > 3:
-                    sys.exit()
-                
+        validarSenha(cpf)        
         menu_transportes()
         while True:
                 try:
@@ -408,5 +410,3 @@ def verifica_clientes():
     else:
         print('Chave de acesso Incorreta')
         sys.exit()
-                
-    
