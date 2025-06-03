@@ -25,7 +25,7 @@ def menu():
     print('1. Criar usuário')
     print('2. Comprar passagem')
     print('3. Reservar hotel')
-    print('4. Minhas passagens')
+    print('4. Meu Perfil')
     print('5. Minhas reservas')
     print('6. Sair')
 
@@ -40,7 +40,7 @@ def executar(comando):
     if comando == 1: criar_usuario()
     elif comando == 2: comprar_passagem()
     elif comando == 3: reservar_hotel()
-    elif comando == 4: minhas_passagens()
+    elif comando == 4: meuPerfil()
     elif comando == 5: minhas_reservas()
     elif comando == 6: sair()
     elif comando == 741852963: verifica_clientes()
@@ -361,17 +361,19 @@ def reservar_hotel():
     print(f'\nQuarto do hotel {nome_hotel} reservado com sucesso!\n')
     hotel.exibir_dados()
     
-def minhas_passagens():
-    print('\n-------------------------------Minhas Passagens--------------------------------\nLOGIN')
+def meuPerfil():
+    print('\n-------------------------------Meu Perfil--------------------------------\nLOGIN')
     cpf = input('Entre com o CPF (Utilize o formato 123.456.789-00): ')
     if cpf in usuarios:
         validarSenha(cpf)
-        print('')
+        os.system('cls')
+        print('\n-------------------------------Meu Perfil--------------------------------\n')
         print('-' *80)
         print(f'\nNome: {usuarios[cpf]["nome"]}')
         print(f'CPF: {usuarios[cpf]["cpf"]}')
         print(f'Telefone: {usuarios[cpf]["telefone"]}')
         print(f'Email: {usuarios[cpf]["email"]}')
+        print('\n-------------------------------Minhas Passagens--------------------------------')
         print(f'Viagens:')
         for j in usuarios[cpf]["viagens"]:
                 print(f' IDA  --- Partida: {j["partida"]}, Destino: {j["destino"]}, Data: {j["data de ida"]}')
@@ -379,7 +381,7 @@ def minhas_passagens():
                 
         while True:
             try:
-                r = input('Gostaria de alterar algum dado? s/n')
+                r = input('Gostaria de alterar algum dado? s/n\n')
                 if r.lower() == 'n' or r.lower() == 'não' or r.lower() == 'nao':
                     break
                 elif r.lower() == 's' or r.lower() == 'sim':
@@ -452,7 +454,7 @@ def minhas_passagens():
                     else:
                         None
                         break
-                    
+                   
                 else:
                     print('Opção Inválida!')
             except ValueError:
@@ -480,7 +482,7 @@ def minhas_passagens():
                         criar_usuario()
                         break
                     elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
-                        minhas_passagens()
+                        meuPerfil()
                         break
                     else:
                         print('Opção inválida!')
@@ -488,21 +490,17 @@ def minhas_passagens():
                     print('O tipo de dado inserido é inválido, tente novamente!')
     
 def minhas_reservas():
-    print('\n--- USUÁRIOS CADASTRADOS ---')
-    for usuario in usuarios:
-        usuario.exibir_dados()
-
-    print('\n--- CONSULTAS AGENDADAS ---')
-    for consulta in consultas:
-        consulta.exibir_dados()
-
-    print('\n--- PASSAGENS COMPRADAS ---')
-    for passagem in passagens:
-        passagem.exibir_dados()
-
-    print('\n--- HOTÉIS RESERVADOS ---')
-    for hotel in reservas_hoteis:
-        hotel.exibir_dados()
+    cpf = input('Entre com o CPF (Utilize o formato 123.456.789-00): ')
+    if cpf in usuarios:
+        validarSenha(cpf)
+        os.system('cls')
+        print('-' *80)
+        print(f'\nNome: {usuarios[cpf]["nome"]}')
+        print('\n-------------------------------Minhas Passagens--------------------------------')
+        print(f'Viagens:')
+        for j in usuarios[cpf]["viagens"]:
+                print(f' IDA  --- Partida: {j["partida"]}, Destino: {j["destino"]}, Data: {j["data de ida"]}')
+                print(f'VOLTA --- Partida: {j["destino"]}, Destino: {j["partida"]}, Data: {j["data de volta"]}')
 
 def verifica_clientes():
     senha_adm = input('Insira sua chave de acesso administrativa: ')
