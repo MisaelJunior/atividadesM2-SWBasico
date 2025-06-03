@@ -1,4 +1,5 @@
-# Aplicativo de reservas: agendar consultas, reservas de hotel ou passagens
+# Aplicativo de reservas: agendar, reservar e comprar passagens
+#Entidades escolhidas: Passageiro, Viagem, Passagem, Administrador
 # Data: 06/06/2025
 # Autores: Diego Miranda - turma C - 11251505836
 #          Enzo Pereira - turma C - 11251103452
