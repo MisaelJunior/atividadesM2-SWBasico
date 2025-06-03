@@ -47,6 +47,7 @@ def menu_transportes():
     print('1. Aéreo')
     print('2. Rodoviário')
     print('3. Ferroviário')
+
 def consultaUsuario(cpf):
     if cpf in usuarios:
         print('\n-------------------------------Busca de usuários--------------------------------\n')
@@ -90,6 +91,7 @@ def executar(comando):
 def sair():
     print('\nSair.')
     sys.exit()    
+
 def cadastrarFuncionario():
     mestra = input('É necessário entrar com a chave mestra para cadastrar um novo funcionário: ')
     if mestra in chaveMestra:
