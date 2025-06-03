@@ -18,7 +18,7 @@ while comando != 6:
     funcoes.executar(comando)
     while True:
         try:
-            resp = input('Deseja voltar ao menu principal? s/n\n')
+            resp = input('Deseja voltar ao menu principal? s/n\nAo escolher n o programa será encerrado.\n')
             if resp.lower() == 's' or resp.lower() == 'sim':
                 os.system('cls')
                 funcoes.menu()
@@ -32,5 +32,5 @@ while comando != 6:
         except ValueError:
             print('Tipo de dado inserido inválido!')
             
-    input('\nPressione qualquer tecla.')
+    input('\nSaindo...\n\nPressione a tecla Enter para continuar')
     
