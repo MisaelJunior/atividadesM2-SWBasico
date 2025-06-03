@@ -313,10 +313,10 @@ def comprar_passagem():
         while True:
                 try:
                     r = input('Deseja cadastrar um novo usuário? s/n ')
-                    if r == 's' or r == 'sim' :
+                    if r.lower() == 's' or r.lower() == 'sim' :
                         criar_usuario()
                         break
-                    elif r == 'n' or r == 'nao' or r == 'não':
+                    elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
                         comprar_passagem()
                         break
                     else:
@@ -345,8 +345,6 @@ def reservar_data():
         print(f'Datas {data1.date()} - {data2.date()} reservadas com sucesso!')
         return data1.date(), data2.date()
         
-          
-
 def reservar_hotel():
     print('\n--- RESERVAR HOTEL ---')
     nome_hotel = input('\nDigite o nome do hotel: ')
@@ -361,17 +359,35 @@ def reservar_hotel():
     hotel.exibir_dados()
     
 def minhas_passagens():
-    print('\n--- AGENDAR CONSULTA ---')
-    especialidade = input('\nDigite a especialidade: ')
-    local = input('\nDigite o local da consulta: ')
-    medico = input('\nDigite o nome do médico: ')
-    data_consulta = input('\nDigite a data da consulta: ')
-
-    consulta = Consulta(especialidade, local, medico, data_consulta)
-    consultas.append(consulta)
-
-    print('\nConsulta agendada com sucesso!\n')
-    consulta.exibir_dados()
+    print('\n-------------------------------Minhas Passagens--------------------------------\nLOGIN')
+    cpf = input('Entre com o CPF (Utilize o formato 123.456.789-00): ')
+    if cpf in usuarios:
+        validarSenha(cpf)
+        print('')
+        print('-' *80)
+        print(f'\nUsuário: {usuarios[cpf]["nome"]}')
+        print(f'CPF: {usuarios[cpf]["cpf"]}')
+        print(f'Telefone: {usuarios[cpf]["telefone"]}')
+        print(f'Email: {usuarios[cpf]["email"]}')
+        print(f'Viagens:')
+        for j in usuarios[cpf]["viagens"]:
+                print(f' IDA  --- Partida: {j["partida"]}, Destino: {j["destino"]}, Data: {j["data de ida"]}')
+                print(f'VOLTA --- Partida: {j["destino"]}, Destino: {j["partida"]}, Data: {j["data de volta"]}')
+    else:
+        print('CPF não cadastrado.\nRealize o cadastro ou corrija as informações para continuar.')
+        while True:
+                try:
+                    r = input('Deseja cadastrar um novo usuário? s/n ')
+                    if r.lower() == 's' or r.lower() == 'sim' :
+                        criar_usuario()
+                        break
+                    elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
+                        minhas_passagens()
+                        break
+                    else:
+                        print('Opção inválida!')
+                except ValueError:
+                    print('O tipo de dado inserido é inválido, tente novamente!')
     
 def minhas_reservas():
     print('\n--- USUÁRIOS CADASTRADOS ---')
