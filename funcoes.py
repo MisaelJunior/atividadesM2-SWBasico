@@ -42,6 +42,67 @@ def menu():
     print('6. Menu Administrativo')
     print('7. Sair')
 
+def cadastro(pessoa, cargo, identificador):
+    print(f'\n--- NOVO {pessoa.upper()} ---')
+    cpf = input(f'\nDigite o CPF do {pessoa} (Utilize o formato 123.456.789-00): ')
+    
+    if cargo == funcionarios:
+        mestra = input('É necessário entrar com a chave mestra para cadastrar um novo funcionário: ')
+        if mestra in chaveMestra:
+            print('\n--- CADASTRO DE FUNCIONÁRIO ---')
+            identificador = input('\nDigite o ID do funcionário: ') 
+            if identificador in funcionarios:
+                print('ID já cadastrado')
+            else:
+                nome = input(f'\nDigite o nome do {pessoa}: ')
+                cpf = input(f'\nDigite o CPF do {pessoa} (Utilize o formato 123.456.789-00): ')
+                tel = input('Telefone: ')
+                email = input('Email: ')
+                while True:
+                    chave = input('Crie uma chave de acesso: ')
+                    if len(chave) < 8:
+                        print('A chave de acesso deve possuir pelo menos 8 caracteres')
+                    else:
+                        os.system('cls')
+                        print('Chave de acesso cadastrada com sucesso')
+                        cargo[identificador] = {
+                                "id": id,
+                                "nome": nome,
+                                "cpf": cpf,
+                                "telefone": tel,
+                                "email": email,
+                                "chave de acesso": chave,
+                            }
+                        print('Funcionário cadastrado com sucesso.')
+                        break
+        else:
+            print('Chave mestra não confere.')
+            sair()
+    else:
+        if cpf in cargo:
+            print('CPF já cadastrado')
+        else:
+            nome = input(f'\nDigite o nome do {pessoa}: ')
+            tel = input('Telefone: ')
+            email = input('Email: ')
+            while True:
+                senha = input('Crie uma senha: ')
+                if len(senha) < 8:
+                    print('A senha deve possuir pelo menos 8 caracteres')
+                else:
+                    os.system('cls')
+                    print('Senha cadastrada com sucesso')
+                    cargo[identificador] = {
+                        "nome": nome,
+                        "cpf": cpf,
+                        "telefone": tel,
+                        "email": email,
+                        "senha": senha,
+                        "viagens": []
+                    }
+                    print(f'{pessoa} cadastrado com sucesso.')
+                    break
+                
 def menu_transportes():
     print('-----Tipos de Transporte-----')
     print('1. Aéreo')
@@ -65,13 +126,13 @@ def executar(comando):
     while True:
         try:
             if comando == 1:
-                criar_usuario()
+                cadastro('usuário', usuarios, cpf)
                 break
             elif comando == 2:
                 comprar_passagem()
                 break
             elif comando == 3:
-                cadastrarFuncionario()
+                cadastro('funcionário', funcionarios, id)
                 break
             elif comando == 4:
                 meuPerfil()
@@ -91,72 +152,6 @@ def executar(comando):
 def sair():
     print('\nSair.')
     sys.exit()    
-
-def cadastrarFuncionario():
-    mestra = input('É necessário entrar com a chave mestra para cadastrar um novo funcionário: ')
-    if mestra in chaveMestra:
-        print('\n--- CADASTRO DE FUNCIONÁRIO ---')
-        nome = input('\nDigite o nome do funcionário: ')
-        id = input('\nDigite o ID do funcionário: ') 
-        cpf = input('\nDigite o CPF do usuário (Utilize o formato 123.456.789-00): ')
-
-        if id in funcionarios:
-            print('ID já cadastrado')
-        else:
-            tel = input('Telefone: ')
-            email = input('Email: ')
-            while True:
-                chave = input('Crie uma chave de acesso: ')
-                if len(chave) < 8:
-                    print('A chave de acesso deve possuir pelo menos 8 caracteres')
-                else:
-                    os.system('cls')
-                    print('Chave de acesso cadastrada com sucesso')
-                    break
-
-                
-            funcionarios[id] = {
-                "id": id,
-                "nome": nome,
-                "cpf": cpf,
-                "telefone": tel,
-                "email": email,
-                "chave de acesso": chave,
-            }
-            print('Funcionário cadastrado com sucesso.')
-    else: 
-        print('Chave mestra não confere.')
-        sair()
-        
-def criar_usuario():
-    print('\n--- NOVO USUÁRIO ---')
-    nome = input('\nDigite o nome do usuário: ')
-    cpf = input('\nDigite o CPF do usuário (Utilize o formato 123.456.789-00): ')
-
-    if cpf in usuarios:
-        print('CPF já cadastrado')
-    else:
-        tel = input('Telefone: ')
-        email = input('Email: ')
-        while True:
-            senha = input('Crie uma senha: ')
-            if len(senha) < 8:
-                print('A senha deve possuir pelo menos 8 caracteres')
-            else:
-                os.system('cls')
-                print('Senha cadastrada com sucesso')
-                break
-                
-        
-        usuarios[cpf] = {
-            "nome": nome,
-            "cpf": cpf,
-            "telefone": tel,
-            "email": email,
-            "senha": senha,
-            "viagens": []
-        }
-        print('Usuário cadastrado com sucesso.')
 
 def validarSenha(identificador):
     tentativa = 1
