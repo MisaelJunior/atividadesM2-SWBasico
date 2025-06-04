@@ -392,7 +392,7 @@ def comprar_passagem():
                 try:
                     r = input('Deseja cadastrar um novo usuário? s/n ')
                     if r.lower() == 's' or r.lower() == 'sim' :
-                        criar_usuario()
+                        cadastro('usuário', usuarios, cpf)
                         break
                     elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
                         comprar_passagem()
@@ -502,7 +502,7 @@ def meuPerfil():
                                 validarSenha(cpf)
                                 del usuarios[cpf]
                                 print('Usuário excluído com sucesso!')
-                                criar_usuario()
+                                cadastro('usuário', usuarios, cpf)
                                 break
                             elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
                                 break
@@ -534,7 +534,7 @@ def meuPerfil():
                 try:
                     r = input('Deseja cadastrar um novo usuário? s/n ')
                     if r.lower() == 's' or r.lower() == 'sim' :
-                        criar_usuario()
+                        cadastro('usuário', usuarios, cpf)
                         break
                     elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
                         meuPerfil()
@@ -568,7 +568,7 @@ def verifica_clientes():
                 acao = int(input('Que ação deseja realizar? '))
                 try:
                     if acao == 1:
-                        criar_usuario()
+                        cadastro('usuário', usuarios, cpf)
                         break
                     elif acao == 2:
                         cpf = input('Insira o CPF para a Busca: ')
@@ -620,7 +620,7 @@ def verifica_clientes():
                                                 validarSenha(cpf)
                                                 del usuarios[cpf]
                                                 print('Usuário excluído com sucesso!')
-                                                criar_usuario()
+                                                cadastro('usuário', usuarios, cpf)
                                                 break
                                             elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
                                                 break
