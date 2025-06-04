@@ -425,8 +425,8 @@ def reservar_data():
         
         print(f'Datas {data1.date()} - {data2.date()} reservadas com sucesso!')
         return data1.date(), data2.date()    
-    
-def meuPerfil():
+
+def perfilUsuario():
     print('\n-------------------------------Meu Perfil--------------------------------\nLOGIN')
     cpf = input('Entre com o CPF (Utilize o formato 123.456.789-00): ')
     if cpf in usuarios:
@@ -443,7 +443,26 @@ def meuPerfil():
         for j in usuarios[cpf]["viagens"]:
                 print(f' IDA  --- Partida: {j["partida"]}, Destino: {j["destino"]}, Data: {j["data de ida"]}')
                 print(f'VOLTA --- Partida: {j["destino"]}, Destino: {j["partida"]}, Data: {j["data de volta"]}')
-                
+    else:
+        print('CPF não cadastrado.\nRealize o cadastro ou corrija as informações para continuar.')
+        while True:
+                try:
+                    r = input('Deseja cadastrar um novo usuário? s/n ')
+                    if r.lower() == 's' or r.lower() == 'sim' :
+                        cadastro('usuário', usuarios, cpf)
+                        break
+                    elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
+                        meuPerfil()
+                        break
+                    else:
+                        print('Opção inválida!')
+                except ValueError:
+                    print('O tipo de dado inserido é inválido, tente novamente!')
+
+def meuPerfil():
+    perfilUsuario()
+    cpf = input('Entre com o CPF para ver as opções (Utilize o formato 123.456.789-00): ')
+    if cpf in usuarios:    
         while True:
             try:
                 print('Perfil do usuário-----------------------------------')
@@ -522,28 +541,14 @@ def meuPerfil():
                         input('Pressione a tecla Enter para continuar')
                         os.system('cls')
                 else:
-                    None
-                    break
-                   
+                    os.system('cls')
+                    menu()
+                    comando = int(input('\nEscolha uma opção: '))
+                    executar(comando)
+                    break        
             except ValueError:
-                print('Tipo de dado inserido inválido!')  
-        
-    else:
-        print('CPF não cadastrado.\nRealize o cadastro ou corrija as informações para continuar.')
-        while True:
-                try:
-                    r = input('Deseja cadastrar um novo usuário? s/n ')
-                    if r.lower() == 's' or r.lower() == 'sim' :
-                        cadastro('usuário', usuarios, cpf)
-                        break
-                    elif r.lower() == 'n' or r.lower() == 'nao' or r.lower() == 'não':
-                        meuPerfil()
-                        break
-                    else:
-                        print('Opção inválida!')
-                except ValueError:
-                    print('O tipo de dado inserido é inválido, tente novamente!')
-    
+                print('Tipo de dado inserido inválido!')     
+      
 def minhas_reservas():
     cpf = input('Entre com o CPF (Utilize o formato 123.456.789-00): ')
     if cpf in usuarios:
