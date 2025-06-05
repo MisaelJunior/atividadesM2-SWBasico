@@ -35,7 +35,7 @@ def executar(comando):
                 funcoes.verificaClientes()
                 break
             elif comando == 7:
-                funcoes.sair()
+                sair()
             else: print('\nOpção inválida.')
         except ValueError:
             print('\nOpção inválida.')

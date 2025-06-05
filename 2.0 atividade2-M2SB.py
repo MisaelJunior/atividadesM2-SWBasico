@@ -15,7 +15,15 @@ comando = 0
 while comando != 6:
     os.system('cls')
     funcoesMenu.menu()
-    comando = int(input('\nEscolha uma opção: '))
+    while True:
+        try:
+            comando = int(input('\nEscolha uma opção: '))
+            if comando in [1, 2, 3, 4, 5, 6, 7]:
+                break
+            else:
+                print('\033[1;31mOpção inválida. Por favor, escolha uma opção válida.\033[0m')
+        except ValueError:
+            print('\033[1;31mTipo de dado inserido inválido! Por favor, insira um número de 1 a 7.\033[0m')
     funcoesMenu.executar(comando)
     while True:
         try:
