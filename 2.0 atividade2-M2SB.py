@@ -7,31 +7,31 @@
 
 #libs
 import os
-import funcoes
+from funções import funcoesMenu
 
 #main
 comando = 0
 
 while comando != 6:
     os.system('cls')
-    funcoes.menu()
+    funcoesMenu.menu()
     comando = int(input('\nEscolha uma opção: '))
-    funcoes.executar(comando)
+    funcoesMenu.executar(comando)
     while True:
         try:
-            resp = input('Deseja voltar ao menu principal? s/n\nAo escolher n o programa será encerrado.\n')
+            resp = input('\033[1;34mDeseja voltar ao menu principal? s/n\nAo escolher n o programa será encerrado.\033[0m\n')
             if resp.lower() == 's' or resp.lower() == 'sim':
                 os.system('cls')
-                funcoes.menu()
+                funcoesMenu.menu()
                 comando = int(input('\nEscolha uma opção: '))
-                funcoes.executar(comando)
+                funcoesMenu.executar(comando)
             elif resp.lower() == 'n' or resp.lower() == 'não' or resp.lower() == 'nao':
                 comando = 6
                 break
             else:
-                print('Valor inválido')
+                print('\033[1;31mValor inválido\033[0m')
         except ValueError:
-            print('Tipo de dado inserido inválido!')
+            print('\033[1;31mTipo de dado inserido inválido!\033[0m')
             
-    input('\nSaindo...\n\nPressione a tecla Enter para continuar')
+    input('\n\033[1;32mSaindo...\033[0m\n\nPressione a tecla Enter para continuar')
     
