@@ -457,9 +457,10 @@ def verificaClientes():
             print('2. Consultar usuário')
             print('3. Alterar dados de usuário')
             print('4. Consultar lista de usuários')
-            print('5. Excluir usuário')
-            print('6. Excluir Funcionário')
-            print('7. Voltar')
+            print('5. Consultar lista de funcionários')
+            print('6. Excluir usuário')
+            print('7. Excluir Funcionário')
+            print('8. Voltar')
             print('-'*50)
             acao = int(input('Que ação deseja realizar? '))
             try:
@@ -561,10 +562,25 @@ def verificaClientes():
                     print('\n' + '='*50)
                     break
                 elif acao == 5:
-                    excluirPessoa(usuarios, cpf)
+                    print('\n' + '='*50)
+                    print(' ' * 10 + 'Lista de Funcionários')
+                    print('='*50)
+                    print(f'Quantidade de Funcionários: {len(funcionarios)}')
+                    for i in funcionarios:
+                        print('\n' + '-'*50)
+                        print(f'Nome:      {funcionarios[i]["nome"]}')
+                        print(f'ID:        {funcionarios[i]["id"]}')
+                        print(f'CPF:       {funcionarios[i]["cpf"]}')
+                        print(f'Telefone:  {funcionarios[i]["telefone"]}')
+                        print(f'Email:     {funcionarios[i]["email"]}')
+                        
+                    print('\n' + '='*50)
+                    break
                 elif acao == 6:
-                    excluirPessoa(funcionarios, id)
+                    excluirPessoa(usuarios, cpf)
                 elif acao == 7:
+                    excluirPessoa(funcionarios, id)
+                elif acao == 8:
                     print('\033[91m\n[!] Retornando ao menu anterior.\033[0m')
                     break
                 else:
