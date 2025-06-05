@@ -458,7 +458,8 @@ def verificaClientes():
             print('3. Alterar dados de usuário')
             print('4. Consultar lista de usuários')
             print('5. Excluir usuário')
-            print('6. Voltar')
+            print('6. Excluir Funcionário')
+            print('7. Voltar')
             print('-'*50)
             acao = int(input('Que ação deseja realizar? '))
             try:
@@ -560,16 +561,10 @@ def verificaClientes():
                     print('\n' + '='*50)
                     break
                 elif acao == 5:
-                    print('\n' + '-'*50)
-                    cpf = input('Insira o CPF do usuário a ser excluído: ')
-                    if cpf in usuarios:
-                        validarSenha(id, funcionarios)
-                        del usuarios[cpf]
-                        print('\n[✔] Usuário excluído com sucesso!')
-                        break
-                    else:
-                        print('\033[91m\n[!] Usuário não encontrado.\033[0m')
+                    excluirPessoa(usuarios, cpf)
                 elif acao == 6:
+                    excluirPessoa(funcionarios, id)
+                elif acao == 7:
                     print('\033[91m\n[!] Retornando ao menu anterior.\033[0m')
                     break
                 else:
@@ -577,6 +572,29 @@ def verificaClientes():
             except ValueError:
                 print('\033[91m\n[!] Opção inválida.\033[0m')
         input('\nPressione a tecla Enter para continuar')
+
+def excluirPessoa(cargo, identificador):
+    if cargo == funcionarios:
+        mestra = input('\nÉ necessário entrar com a chave mestra para excluir um funcionário: ')
+        if mestra in chaveMestra:
+            print(f'\n\033[1;36m{"-"*40}\n      EXCLUSÃO DE FUNCIONÁRIO\n{"-"*40}\033[0m')
+            identificador = input('\nDigite o ID do funcionário: ')
+            if not identificador in funcionarios:
+                print('\n\033[91m[!] ID não encontrado.\033[0m\n')
+            else:
+                del funcionarios[identificador]
+                print('\n[✔] Funcionário excluído com sucesso!')
+        else:
+            print('\n\033[91m[!] Chave mestra não confere.\033[0m\n')
+            funcoesMenu.sair()
+    else:
+        cpf = input(f'\nDigite o CPF do usuário a ser excluído (Utilize o formato 123.456.789-00): ')
+        if not cpf in cargo:
+            print('\n\033[91m[!] CPF não encontrado.\033[0m\n')
+        else:
+            del usuarios[cpf]
+            print('\n[✔] Usuário excluído com sucesso!')
+
 # Função para gerar o valor da passagem com base no tipo de transporte e datas
 def gerarValor(viagem, tipo_transporte):
     
