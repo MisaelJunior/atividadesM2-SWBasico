@@ -12,7 +12,7 @@ from funções import funcoesMenu
 #main
 comando = 0
 
-while comando != 6:
+while comando != 7:
     os.system('cls')
     funcoesMenu.menu()
     while True:
@@ -34,7 +34,7 @@ while comando != 6:
                 comando = int(input('\nEscolha uma opção: '))
                 funcoesMenu.executar(comando)
             elif resp.lower() == 'n' or resp.lower() == 'não' or resp.lower() == 'nao':
-                comando = 6
+                comando = 7
                 break
             else:
                 print('\033[1;31mValor inválido\033[0m')
@@ -42,4 +42,4 @@ while comando != 6:
             print('\033[1;31mTipo de dado inserido inválido!\033[0m')
             
     input('\n\033[1;32mSaindo...\033[0m\n\nPressione a tecla Enter para continuar')
-    
+        
