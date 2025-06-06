@@ -48,7 +48,6 @@ def cadastro(pessoa, cargo, identificador):
                 print('\n\033[91m[!] ID já cadastrado.\033[0m\n')
             else:
                 nome = input(f'\nDigite o nome do {pessoa}: ')
-                
                 tel = input('Telefone: ')
                 email = input('Email: ')
                 while True:
@@ -133,7 +132,7 @@ def validarSenha(identificador, cargo):
     while True:
         if cargo == funcionarios:
             validacao = input('\033[1;34mEntre com a Chave de acesso:\033[0m ')
-        elif cargo == usuarios:
+        else:
             validacao = input('\033[1;34mEntre com a senha:\033[0m ')
             
         if validacao == cargo[identificador]["senha"]:
