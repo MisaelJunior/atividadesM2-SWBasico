@@ -48,7 +48,7 @@ def cadastro(pessoa, cargo, identificador):
                 print('\n\033[91m[!] ID já cadastrado.\033[0m\n')
             else:
                 nome = input(f'\nDigite o nome do {pessoa}: ')
-                cpf = input(f'\nDigite o CPF do {pessoa} (Utilize o formato 123.456.789-00): ')
+                
                 tel = input('Telefone: ')
                 email = input('Email: ')
                 while True:
