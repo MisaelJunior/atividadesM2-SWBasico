@@ -609,7 +609,6 @@ def excluirPessoa(cargo, identificador):
         else:
             del usuarios[cpf]
             print('\n[✔] Usuário excluído com sucesso!')
-
 # Função para gerar o valor da passagem com base no tipo de transporte e datas
 def gerarValor(viagem, tipo_transporte):
     
