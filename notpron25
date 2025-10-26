@@ -1,0 +1,17 @@
+from PIL import Image
+import numpy as np
+
+# Carregar imagem
+img = Image.open('woopwoop25.jpg')
+pixels = np.array(img)
+
+# Multiplicar canais (exemplo: aumentar vermelho)
+#pixels[:, :, 0] = pixels[:, :, 0] * 1.5  # Red
+#pixels[:, :, 1] = pixels[:, :, 1] * 0.5  # Green
+pixels[:, :, 2] = pixels[:, :, 2] * 200  # Blue
+
+# Limitar valores (0-255)
+#pixels = np.clip(pixels, 0, 255)
+
+# Salvar
+Image.fromarray(pixels.astype('uint8')).save('resultado8.jpg')
